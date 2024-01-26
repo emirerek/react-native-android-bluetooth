@@ -252,18 +252,30 @@ function TopBar() {
 }
 
 function PianoKeyboard() {
-	const accidentalKeys = accidentalNotes.map((note) => <PianoKeyAccidental letter={note.letter} handler={() => writeCode(note.code)} />)
+	const accidentalKeys = accidentalNotes.map((note) => 
+		<PianoKeyAccidental 
+			letter={note.letter} 
+			handler={() => writeCode(note.code)} 
+		/>
+	);
 	const naturalKeys = [];
 	let accidentalIndex = 0;
 	for (const note of naturalNotes) {
 		if (note.letter != "E" && note.letter != "B") {
 			naturalKeys.push(
-				<PianoKey letter={note.letter} handler={() => writeCode(note.code)} children={accidentalKeys[accidentalIndex]}/>
+				<PianoKeyNatural 
+					letter={note.letter} 
+					handler={() => writeCode(note.code)} 
+					children={accidentalKeys[accidentalIndex]}
+				/>
 			);
 			accidentalIndex++;
 		} else {
 			naturalKeys.push(
-				<PianoKey letter={note.letter} handler={() => writeCode(note.code)} />
+				<PianoKeyNatural
+					letter={note.letter} 
+					handler={() => writeCode(note.code)}
+				/>
 			);
 		}
 	}
@@ -274,9 +286,9 @@ function PianoKeyboard() {
 	);
 } 
 
-function PianoKey({ letter, handler, children }) {
+function PianoKeyNatural({ letter, handler, children }) {
 	return (
-		<View style={styles.keyNaturalContainer}>
+		<View style={styles.keyNatural}>
 			<Pressable onPress={handler}>
 				<Text style={styles.keyNaturalText}>{letter}</Text>
 			</Pressable>
@@ -294,6 +306,11 @@ function PianoKeyAccidental({ letter, handler }) {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		flexDirection: "row-reverse",
+		zIndex: 0,
+	},
 	spinnerContainer: {
 		alignItems: "center",
 		justifyContent: "center",
@@ -309,11 +326,6 @@ const styles = StyleSheet.create({
 		width: "20%",
 		backgroundColor: "white",
 		elevation: 5,
-	},
-	container: {
-		flex: 1,
-		flexDirection: "row-reverse",
-		zIndex: 0,
 	},
 	topBar: {
 		flex: 1,
@@ -338,7 +350,7 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 		zIndex: 0,
 	},
-	keyNaturalContainer: {
+	keyNatural: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "flex-start",
