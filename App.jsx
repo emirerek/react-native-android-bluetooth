@@ -90,7 +90,9 @@ export default function App() {
 					PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
 				);
 				if (!locationGranted) {
-					const locationResult = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+					const locationResult = await PermissionsAndroid.request(
+						PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+					);
 					if (locationResult === PermissionsAndroid.RESULTS.GRANTED) {
 						console.log("Uygulama icin gerekli izinler verildi.");
 						setPermissionsGranted(true);
@@ -116,8 +118,8 @@ export default function App() {
 	const checkBluetoothEnabled = async () => {
 		try {
 			setLoading(true);
-			const bluetoothEnabledState = await BluetoothSerial.isEnabled();
-			if (!bluetoothEnabledState) {
+			const initialBluetoothState = await BluetoothSerial.isEnabled();
+			if (!initialBluetoothState) {
 				await BluetoothSerial.requestEnable();
 				setBluetoothEnabled(true);
 				setLoading(false);
